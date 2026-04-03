@@ -10,10 +10,10 @@ import OrderForm from "../components/OrderForm";
 import { Button } from "@/components/ui/button";
 import { getAllOrders } from "@/lib/actions/order.actions";
 import OrderTable from "../components/OrderTable";
-import { IOrder } from "@/lib/database/models/order.model";
 import { getAllCustomers, getAllProducts } from "@/lib/actions";
 import { ICustomer } from "@/lib/database/models/customer.model";
 import { redirect } from "next/navigation";
+import { PlainOrder } from "@/lib/utils";
 
 const Page = async () => {
   const { userId } = await auth();
@@ -22,7 +22,7 @@ const Page = async () => {
 
   const tenantId = userId;
 
-  const orders: IOrder[] = (await getAllOrders(tenantId)) || [];
+  const orders: PlainOrder[] = (await getAllOrders(tenantId)) || [];
   const products = (await getAllProducts(tenantId)) || [];
   const customers: ICustomer[] = (await getAllCustomers(tenantId)) || [];
 

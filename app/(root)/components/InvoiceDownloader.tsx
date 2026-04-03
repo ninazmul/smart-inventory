@@ -5,10 +5,10 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { DownloadCloud, Printer } from "lucide-react";
 import InvoiceTemplate from "./InvoiceTemplate";
-import { IOrder } from "@/lib/database/models/order.model";
 import { Button } from "@/components/ui/button";
+import { PlainOrder } from "@/lib/utils";
 
-export default function InvoiceDownloader({ order }: { order: IOrder }) {
+export default function InvoiceDownloader({ order }: { order: PlainOrder }) {
   const invoiceRef = useRef<HTMLDivElement>(null);
 
   const handleDownload = async () => {

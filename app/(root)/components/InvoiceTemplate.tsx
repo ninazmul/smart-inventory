@@ -1,8 +1,8 @@
-import { IOrder, IOrderProduct } from "@/lib/database/models/order.model";
+import { PlainOrder, PlainOrderProduct } from "@/lib/utils";
 import Image from "next/image";
 
 type InvoiceTemplateProps = {
-  order: IOrder;
+  order: PlainOrder;
 };
 
 export default function InvoiceTemplate({ order }: InvoiceTemplateProps) {
@@ -60,7 +60,7 @@ export default function InvoiceTemplate({ order }: InvoiceTemplateProps) {
           </tr>
         </thead>
         <tbody>
-          {order.products.map((p: IOrderProduct, i: number) => (
+          {order.products.map((p: PlainOrderProduct, i: number) => (
             <tr key={i} className={i % 2 === 0 ? "" : "bg-gray-50"}>
               <td className="p-2 w-20 h-20 relative">
                 <Image

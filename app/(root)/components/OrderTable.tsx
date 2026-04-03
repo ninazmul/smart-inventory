@@ -31,13 +31,13 @@ import {
 import OrderForm from "./OrderForm";
 import RestockQueue from "./RestockQueue";
 import { deleteOrder } from "@/lib/actions";
-import { IOrder, IOrderProduct } from "@/lib/database/models/order.model";
 import { IProduct } from "@/lib/database/models/product.model";
 import { ICustomer } from "@/lib/database/models/customer.model";
 import InvoiceDownloader from "./InvoiceDownloader";
+import { PlainOrder, PlainOrderProduct } from "@/lib/utils";
 
 type OrderTableProps = {
-  orders: IOrder[];
+  orders: PlainOrder[];
   products: IProduct[];
   customers: ICustomer[];
   tenantId: string;
@@ -50,7 +50,7 @@ const OrderTable = ({
   tenantId,
 }: OrderTableProps) => {
   const router = useRouter();
-  const [selectedOrder, setSelectedOrder] = useState<IOrder | null>(null);
+  const [selectedOrder, setSelectedOrder] = useState<PlainOrder | null>(null);
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -106,7 +106,7 @@ const OrderTable = ({
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-64">
-                    {order.products.map((p: IOrderProduct) => (
+                    {order.products.map((p: PlainOrderProduct) => (
                       <DropdownMenuItem
                         key={p.productId.toString()}
                         className="flex items-center gap-2"

@@ -22,12 +22,12 @@ import {
 import * as z from "zod";
 import { IProduct } from "@/lib/database/models/product.model";
 import { ICustomer } from "@/lib/database/models/customer.model";
-import { IOrder } from "@/lib/database/models/order.model";
 import { createOrder, updateOrder } from "@/lib/actions/order.actions";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import ProductPicker from "./ProductPicker";
+import { PlainOrder } from "@/lib/utils";
 
 // ---------------- Zod Schema ----------------
 const orderFormSchema = z.object({
@@ -59,7 +59,7 @@ type OrderFormProps = {
   customers: ICustomer[];
   products: IProduct[];
   type: "Create" | "Update";
-  order?: IOrder;
+  order?: PlainOrder;
 };
 
 const OrderForm = ({

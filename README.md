@@ -1,6 +1,10 @@
 # Inventory & Sales Dashboard
 
-A **full-featured Inventory & Sales Dashboard** built with **Next.js**, **MERN stack**, and **Recharts**, providing real-time analytics, product management, and customer insights. Optimized for **multi-tenant environments** with **async activity logging** and a fully responsive UI.
+A **fullstack SaaS software** built with **Next.js App Router**, **MERN stack**, and **Recharts**, providing real-time analytics, product management, and customer insights. Optimized for **multi-tenant environments** with **async activity logging** and a fully responsive UI.
+
+This platform is designed as a **SaaS application**, allowing **payment, billing, and user management** through **Clerk**. Each user receives a **separate dashboard** gated by their unique `userId` generated via Clerk.
+
+> **Note:** To run this application fully, you need to set up **Clerk**, **MongoDB**, **UploadThing**, and configure **Clerk webhooks** for proper SaaS functionality.
 
 ---
 
@@ -39,10 +43,12 @@ A **full-featured Inventory & Sales Dashboard** built with **Next.js**, **MERN s
 - Stock levels visualized with bar charts
 - Order status distribution via pie charts
 
-### Multi-tenant Support
+### Multi-tenant & SaaS Support
 
 - Tenant-specific activity logging
 - Async database logging for key actions
+- User-specific dashboards via Clerk `userId`
+- Payment and billing management through Clerk
 
 ### UI & Responsiveness
 
@@ -54,12 +60,12 @@ A **full-featured Inventory & Sales Dashboard** built with **Next.js**, **MERN s
 
 ## Tech Stack
 
-- **Frontend:** Next.js 13+, React 18, TypeScript
+- **Frontend:** Next.js 13+ App Router, React 18, TypeScript
 - **Backend:** Node.js, Express.js, MongoDB, Mongoose
 - **UI Components:** Tailwind CSS, ShadCN UI
 - **Charts & Visualization:** Recharts
 - **State Management:** React Hooks
-- **Other Features:** Async activity logging, multi-tenant support
+- **Other Features:** Async activity logging, multi-tenant SaaS support, Clerk integration for payments, billing, and user management
 
 ---
 
@@ -111,7 +117,6 @@ A **full-featured Inventory & Sales Dashboard** built with **Next.js**, **MERN s
 ├─ proxy.ts
 ├─ README.md
 ├─ tailwind.config.ts
-└─ tsconfig.json
 ```
 
 ---

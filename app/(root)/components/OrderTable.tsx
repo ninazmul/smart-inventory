@@ -34,6 +34,7 @@ import { deleteOrder } from "@/lib/actions";
 import { IOrder, IOrderProduct } from "@/lib/database/models/order.model";
 import { IProduct } from "@/lib/database/models/product.model";
 import { ICustomer } from "@/lib/database/models/customer.model";
+import InvoiceDownloader from "./InvoiceDownloader";
 
 type OrderTableProps = {
   orders: IOrder[];
@@ -152,6 +153,7 @@ const OrderTable = ({
 
               {/* Actions */}
               <TableCell className="flex justify-end gap-2">
+                <InvoiceDownloader order={order} />
                 <Dialog
                   open={selectedOrder?._id === order._id}
                   onOpenChange={(open) => !open && setSelectedOrder(null)}

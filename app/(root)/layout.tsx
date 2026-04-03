@@ -23,7 +23,7 @@ export default async function AdminLayout({
   const email = await getUserEmailById(userId);
 
   if (!userId || !email) {
-    redirect("/");
+    redirect("/sign-in");
   }
 
   return (

@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   description:
     "Smart Inventory is a modern online store in Bangladesh offering high-quality products, fast delivery, and secure checkout.",
 
-  metadataBase: new URL("https://smart-inventory-one.vercel.app"),
+  metadataBase: new URL("https://smartinventoryai.vercel.app"),
 
   alternates: {
     canonical: "/",
@@ -48,14 +48,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_BD",
-    url: "https://smart-inventory-one.vercel.app",
+    url: "https://smartinventoryai.vercel.app",
     siteName: "Smart Inventory",
     title: "Smart Inventory – Trusted Online Store in Bangladesh",
     description:
       "Buy high-quality products from Smart Inventory with fast delivery and secure checkout.",
     images: [
       {
-        url: "https://smart-inventory-one.vercel.app/assets/images/logo.png",
+        url: "https://smartinventoryai.vercel.app/assets/images/logo.png",
         width: 1200,
         height: 630,
         alt: "Smart Inventory",
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     title: "Smart Inventory – Shop Online in Bangladesh",
     description:
       "Discover quality products at Smart Inventory with fast delivery across Bangladesh.",
-    images: ["https://smart-inventory-one.vercel.app/assets/images/logo.png"],
+    images: ["https://smartinventoryai.vercel.app/assets/images/logo.png"],
   },
 
   icons: {

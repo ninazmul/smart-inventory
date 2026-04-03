@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import * as z from "zod";
-import { useUploadThing } from "@/lib/uploadthing";
 import { FileUploader } from "@/components/shared/FileUploader";
 import { createProduct, updateProduct } from "@/lib/actions/product.actions";
 import { IProduct } from "@/lib/database/models/product.model";
@@ -50,7 +49,6 @@ type ProductFormProps = {
 
 const ProductForm = ({ type, product, tenantId }: ProductFormProps) => {
   const router = useRouter();
-  const { startUpload } = useUploadThing("imageUploader");
   const [categories, setCategories] = useState<string[]>([]);
 
   useEffect(() => {
@@ -98,7 +96,7 @@ const ProductForm = ({ type, product, tenantId }: ProductFormProps) => {
         if (newProduct) {
           form.reset();
           toast.success("Product created successfully!");
-          router.push("/dashboard/products");
+          router.push("/products");
         }
       } else if (type === "Update" && product?._id) {
         const updatedProduct = await updateProduct(
@@ -109,11 +107,13 @@ const ProductForm = ({ type, product, tenantId }: ProductFormProps) => {
         if (updatedProduct) {
           form.reset();
           toast.success("Product updated successfully!");
-          router.push("/dashboard/products");
+          router.push("/products");
         }
       }
     } catch {
-      toast.error(`Failed to ${type === "Create" ? "create" : "update"} product. Please try again.`);
+      toast.error(
+        `Failed to ${type === "Create" ? "create" : "update"} product. Please try again.`,
+      );
     }
   }
 
@@ -170,19 +170,12 @@ const ProductForm = ({ type, product, tenantId }: ProductFormProps) => {
           name="mainImage"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Product Image</FormLabel>
+              <FormLabel>Product Photo</FormLabel>
               <FormControl>
                 <FileUploader
                   imageUrl={field.value}
                   setFiles={() => {}}
-                  onFieldChange={async (_blobUrl, files) => {
-                    if (files && files.length > 0) {
-                      const uploaded = await startUpload(files);
-                      if (uploaded?.[0]) {
-                        field.onChange(uploaded[0].url);
-                      }
-                    }
-                  }}
+                  onFieldChange={(uploadedUrl) => field.onChange(uploadedUrl)}
                 />
               </FormControl>
               <FormMessage />

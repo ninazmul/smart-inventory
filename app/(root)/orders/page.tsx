@@ -13,10 +13,14 @@ import OrderTable from "../components/OrderTable";
 import { IOrder } from "@/lib/database/models/order.model";
 import { getAllCustomers, getAllProducts } from "@/lib/actions";
 import { ICustomer } from "@/lib/database/models/customer.model";
+import { redirect } from "next/navigation";
 
 const Page = async () => {
-  const { sessionClaims } = await auth();
-  const tenantId = sessionClaims?.userId as string;
+  const { userId } = await auth();
+
+  if (!userId) redirect("/sign-in");
+
+  const tenantId = userId;
 
   const orders: IOrder[] = (await getAllOrders(tenantId)) || [];
   const products = (await getAllProducts(tenantId)) || [];
@@ -38,7 +42,7 @@ const Page = async () => {
               </Button>
             </DialogTrigger>
 
-            <DialogContent className="bg-white max-w-lg">
+            <DialogContent className="bg-white max-w-3xl max-h-[80vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>Create New Order</DialogTitle>
                 <p className="text-sm text-muted-foreground mt-1">

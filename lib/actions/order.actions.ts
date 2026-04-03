@@ -64,7 +64,7 @@ export const createOrder = async (
 
     const totalPrice = orderProducts.reduce((sum, p) => sum + p.totalPrice, 0);
 
-    const newOrder = await Order.create({
+    const newOrderDoc = await Order.create({
       tenantId,
       products: orderProducts,
       totalPrice,
@@ -76,6 +76,9 @@ export const createOrder = async (
       notes: data.notes,
       status: data.status || "pending",
     });
+
+    // Convert to plain object before returning
+    const newOrder = newOrderDoc.toObject() as IOrder;
 
     await logActivity(
       tenantId,

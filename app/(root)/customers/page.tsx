@@ -12,10 +12,14 @@ import { getAllCustomers } from "@/lib/actions/customer.actions";
 import { ICustomer } from "@/lib/database/models/customer.model";
 import CustomerForm from "../components/CustomerForm";
 import CustomerTable from "../components/CustomerTable";
+import { redirect } from "next/navigation";
 
 const Page = async () => {
-  const { sessionClaims } = await auth();
-  const tenantId = sessionClaims?.userId as string;
+  const { userId } = await auth();
+
+  if (!userId) redirect("/sign-in");
+
+  const tenantId = userId;
 
   const customers: ICustomer[] = (await getAllCustomers(tenantId)) || [];
 
@@ -36,7 +40,7 @@ const Page = async () => {
               </Button>
             </DialogTrigger>
 
-            <DialogContent className="bg-white max-w-lg">
+            <DialogContent className="bg-white max-w-3xl max-h-[80vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>Add New Customer</DialogTitle>
                 <DialogDescription>

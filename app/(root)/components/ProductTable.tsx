@@ -108,7 +108,7 @@ const ProductTable = ({ products, tenantId }: ProductTableProps) => {
                       <Pencil size={16} />
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="bg-white max-w-lg">
+                  <DialogContent className="bg-white max-w-3xl max-h-[80vh] overflow-y-auto">
                     <DialogHeader>
                       <DialogTitle>Update Product</DialogTitle>
                       <DialogDescription>

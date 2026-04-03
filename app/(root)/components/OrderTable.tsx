@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/dialog";
 import OrderForm from "./OrderForm"; // update order + status
 import RestockQueue from "./RestockQueue"; // restock queue component
+import { deleteOrder } from "@/lib/actions";
 
 type OrderTableProps = {
   orders: IOrder[];
@@ -49,8 +50,8 @@ const OrderTable = ({
     if (!confirm("Are you sure you want to delete this order?")) return;
 
     try {
-      const res = await fetch(`/api/orders/${orderId}`, { method: "DELETE" });
-      if (!res.ok) throw new Error("Failed to delete");
+      const res = await deleteOrder(tenantId, orderId);
+      if (!res) throw new Error("Failed to delete");
       toast.success("Order deleted");
       router.refresh();
     } catch (err) {

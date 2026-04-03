@@ -1,5 +1,3 @@
-export const dynamic = "force-static";
-
 import type { Metadata } from "next";
 import { Inter, DM_Serif_Display } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -76,7 +74,7 @@ export const metadata: Metadata = {
     apple: "/assets/images/logo.png",
   },
 
-  category: "ecommerce",
+  category: "inventory management, e-commerce, online shopping, Bangladesh",
 };
 
 export default function RootLayout({

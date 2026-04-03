@@ -11,10 +11,14 @@ import ProductForm from "../components/ProductForm";
 import { Button } from "@/components/ui/button";
 import { getAllProducts } from "@/lib/actions/product.actions";
 import ProductTable from "../components/ProductTable";
+import { redirect } from "next/navigation";
 
 const Page = async () => {
-  const { sessionClaims } = await auth();
-  const tenantId = sessionClaims?.userId as string;
+  const { userId } = await auth();
+
+  if (!userId) redirect("/sign-in");
+
+  const tenantId = userId;
 
   const products = (await getAllProducts(tenantId)) || [];
 
@@ -34,7 +38,7 @@ const Page = async () => {
               </Button>
             </DialogTrigger>
 
-            <DialogContent className="bg-white max-w-lg">
+            <DialogContent className="bg-white max-w-3xl max-h-[80vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>Add New Product</DialogTitle>
                 <DialogDescription>

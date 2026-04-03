@@ -12,10 +12,14 @@ import { Button } from "@/components/ui/button";
 import { getAllCategories } from "@/lib/actions/category.actions";
 import CategoryTable from "../components/CategoryTable";
 import { ICategory } from "@/lib/database/models/category.model";
+import { redirect } from "next/navigation";
 
 const Page = async () => {
-  const { sessionClaims } = await auth();
-  const tenantId = sessionClaims?.userId as string;
+  const { userId } = await auth();
+
+  if (!userId) redirect("/sign-in");
+
+  const tenantId = userId;
 
   const categories: ICategory[] = (await getAllCategories(tenantId)) || [];
 

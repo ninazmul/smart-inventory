@@ -1,30 +1,22 @@
-export const dynamic = "force-dynamic";
-
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { getUserEmailById } from "@/lib/actions/user.actions";
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
 import AdminSidebar from "./components/AdminSidebar";
 import { cookies } from "next/headers";
 import { SignedIn, UserButton } from "@clerk/nextjs";
 import { Toaster } from "react-hot-toast";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { userId } = await auth();
+
+  if (!userId) redirect("/sign-in");
+
   const cookieStore = await cookies();
   const defaultOpen = cookieStore.get("sidebar:state")?.value === "true";
-
-  const { sessionClaims } = await auth();
-
-  const userId = sessionClaims?.userId as string;
-  const email = await getUserEmailById(userId);
-
-  if (!userId || !email) {
-    redirect("/sign-in");
-  }
 
   return (
     <SidebarProvider defaultOpen={defaultOpen}>

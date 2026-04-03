@@ -1,7 +1,7 @@
 "use server";
 
 import { connectToDatabase } from "../database";
-import { handleError } from "../utils";
+import { handleError, PlainOrder, sanitizeOrder } from "../utils";
 import Order, { IOrder, IOrderProduct } from "../database/models/order.model";
 import Product from "../database/models/product.model";
 import { logActivity } from "./activity.actions";
@@ -102,32 +102,23 @@ export const createOrder = async (
 };
 
 // -------------------- GET ALL ORDERS --------------------
-export const getAllOrders = async (
-  tenantId: string,
-): Promise<IOrder[] | void> => {
-  try {
-    await connectToDatabase();
-    return await Order.find({ tenantId }).lean<IOrder[]>().exec();
-  } catch (error) {
-    handleError(error);
-  }
+export const getAllOrders = async (tenantId: string): Promise<PlainOrder[]> => {
+  await connectToDatabase();
+  const orders = await Order.find({ tenantId }).lean<IOrder[]>().exec();
+  return orders.map((o) => sanitizeOrder(o));
 };
 
 // -------------------- GET ORDER BY ID --------------------
 export const getOrderById = async (
   tenantId: string,
   orderId: string,
-): Promise<IOrder | void> => {
-  try {
-    await connectToDatabase();
-    const order = await Order.findOne({ _id: orderId, tenantId })
-      .lean<IOrder>()
-      .exec();
-    if (!order) throw new Error("Order not found");
-    return order;
-  } catch (error) {
-    handleError(error);
-  }
+): Promise<PlainOrder | void> => {
+  await connectToDatabase();
+  const order = await Order.findOne({ _id: orderId, tenantId })
+    .lean<IOrder>()
+    .exec();
+  if (!order) throw new Error("Order not found");
+  return sanitizeOrder(order);
 };
 
 // -------------------- UPDATE ORDER --------------------

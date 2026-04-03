@@ -12,6 +12,7 @@ const ActivitySchema = new Schema<IActivity>({
   timestamp: { type: Date, default: Date.now },
 });
 
-const Activity = models.Activity || model<IActivity>("Activity", ActivitySchema);
+const Activity =
+  models.Activity || model<IActivity>("Activity", ActivitySchema);
 
 export default Activity;

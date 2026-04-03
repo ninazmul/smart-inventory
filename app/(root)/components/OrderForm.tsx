@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -27,6 +27,7 @@ import { createOrder, updateOrder } from "@/lib/actions/order.actions";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Image from "next/image";
+import ProductPicker from "./ProductPicker";
 
 // ---------------- Zod Schema ----------------
 const orderFormSchema = z.object({
@@ -300,19 +301,11 @@ const OrderForm = ({
 
         {/* Product selection */}
         <div className="mt-4">
-          <p className="font-semibold mb-2">Add Products</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            {products.map((p) => (
-              <Button
-                key={p._id.toString()}
-                variant="outline"
-                size="sm"
-                onClick={() => handleAddProduct(p)}
-              >
-                {p.title} (${p.price.toFixed(2)})
-              </Button>
-            ))}
-          </div>
+          <ProductPicker
+            products={products}
+            onAdd={handleAddProduct}
+            maxVisible={10}
+          />
         </div>
 
         {/* Selected Products */}
@@ -328,18 +321,23 @@ const OrderForm = ({
                 className="w-10 h-10 rounded"
               />
               <span className="flex-1">{item.title}</span>
-              <Input
-                type="number"
-                min={1}
-                value={item.quantity}
-                onChange={(e) =>
-                  form.setValue(
-                    `products.${index}.quantity`,
-                    Number(e.target.value),
-                  )
-                }
-                className="w-20"
+
+              {/* Controlled quantity input */}
+              <Controller
+                control={form.control}
+                name={`products.${index}.quantity`}
+                render={({ field }) => (
+                  <Input
+                    type="number"
+                    min={1}
+                    {...field}
+                    value={field.value}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
+                    className="w-20"
+                  />
+                )}
               />
+
               <span>${(item.unitPrice * item.quantity).toFixed(2)}</span>
               <Button
                 variant="destructive"

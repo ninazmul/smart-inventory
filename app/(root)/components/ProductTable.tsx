@@ -35,6 +35,16 @@ const ProductTable = ({ products, tenantId }: ProductTableProps) => {
   const router = useRouter();
   const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(null);
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 8; // products per page
+  const totalPages = Math.ceil(products.length / pageSize);
+
+  const paginatedProducts = products.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize,
+  );
+
   const handleDelete = async (productId: string) => {
     if (!confirm("Are you sure you want to delete this product?")) return;
 
@@ -48,10 +58,10 @@ const ProductTable = ({ products, tenantId }: ProductTableProps) => {
   };
 
   return (
-    <>
-      <Table>
+    <div className="mt-8 flex flex-col gap-6">
+      <Table className="border rounded-lg shadow-sm">
         <TableHeader>
-          <TableRow>
+          <TableRow className="bg-gray-100">
             <TableHead>Image</TableHead>
             <TableHead>Title</TableHead>
             <TableHead>Category</TableHead>
@@ -64,8 +74,11 @@ const ProductTable = ({ products, tenantId }: ProductTableProps) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {products.map((product) => (
-            <TableRow key={product._id.toString()}>
+          {paginatedProducts.map((product) => (
+            <TableRow
+              key={product._id.toString()}
+              className="hover:bg-gray-50 transition-colors"
+            >
               <TableCell>
                 {product.mainImage ? (
                   <Image
@@ -73,32 +86,50 @@ const ProductTable = ({ products, tenantId }: ProductTableProps) => {
                     alt={product.title}
                     width={50}
                     height={50}
-                    className="rounded object-cover"
+                    className="rounded object-cover border"
                   />
                 ) : (
-                  <span className="text-gray-400">No Image</span>
+                  <span className="text-gray-400 italic">No Image</span>
                 )}
               </TableCell>
-              <TableCell>{product.title}</TableCell>
-              <TableCell>{product.category}</TableCell>
-              <TableCell>${product.price.toFixed(2)}</TableCell>
+
+              <TableCell className="font-medium text-gray-900">
+                {product.title}
+              </TableCell>
+              <TableCell className="text-gray-700">
+                {product.category}
+              </TableCell>
+              <TableCell className="font-semibold">
+                ${product.price.toFixed(2)}
+              </TableCell>
               <TableCell>
-                {product.wholesalePrice
-                  ? `$${product.wholesalePrice.toFixed(2)}`
-                  : "-"}
+                {product.wholesalePrice ? (
+                  `$${product.wholesalePrice.toFixed(2)}`
+                ) : (
+                  <span className="text-gray-400">-</span>
+                )}
               </TableCell>
               <TableCell>{product.stock}</TableCell>
               <TableCell>{product.minimumStockThreshold}</TableCell>
+
               <TableCell>
                 {product.isActive ? (
-                  <span className="text-green-600 font-medium">Active</span>
+                  <span className="px-2 py-1 rounded text-xs font-semibold bg-green-100 text-green-700">
+                    Active
+                  </span>
                 ) : (
-                  <span className="text-red-600 font-medium">Inactive</span>
+                  <span className="px-2 py-1 rounded text-xs font-semibold bg-red-100 text-red-700">
+                    Inactive
+                  </span>
                 )}
               </TableCell>
+
               <TableCell className="flex justify-end gap-2">
                 {/* Edit Dialog */}
-                <Dialog>
+                <Dialog
+                  open={selectedProduct?._id === product._id}
+                  onOpenChange={(open) => !open && setSelectedProduct(null)}
+                >
                   <DialogTrigger asChild>
                     <Button
                       size="sm"
@@ -139,7 +170,30 @@ const ProductTable = ({ products, tenantId }: ProductTableProps) => {
           ))}
         </TableBody>
       </Table>
-    </>
+
+      {/* Pagination Controls */}
+      <div className="flex justify-between items-center">
+        <Button
+          variant="outline"
+          size="sm"
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage((prev) => prev - 1)}
+        >
+          Previous
+        </Button>
+        <span className="text-sm text-gray-600">
+          Page {currentPage} of {totalPages}
+        </span>
+        <Button
+          variant="outline"
+          size="sm"
+          disabled={currentPage === totalPages}
+          onClick={() => setCurrentPage((prev) => prev + 1)}
+        >
+          Next
+        </Button>
+      </div>
+    </div>
   );
 };
 

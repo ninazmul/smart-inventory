@@ -17,7 +17,7 @@ const RestockQueue = ({ tenantId, products }: RestockQueueProps) => {
   // Filter low stock products
   const lowStockProducts = products
     .filter((p) => p.stock <= p.minimumStockThreshold)
-    .sort((a, b) => a.stock - b.stock); // lowest stock first
+    .sort((a, b) => a.stock - b.stock);
 
   const getPriority = (product: IProduct) => {
     const ratio = product.stock / product.minimumStockThreshold;
@@ -49,54 +49,65 @@ const RestockQueue = ({ tenantId, products }: RestockQueueProps) => {
   };
 
   return (
-    <div className="mt-6">
+    <div className="mt-8">
       <h3 className="text-xl font-bold mb-4">Restock Queue</h3>
+
       {lowStockProducts.length === 0 ? (
-        <p className="text-gray-500">No low stock products.</p>
+        <p className="text-gray-500 italic">No low stock products 🎉</p>
       ) : (
         <div className="flex flex-col gap-3">
-          {lowStockProducts.map((p) => (
-            <div
-              key={p._id.toString()}
-              className="flex items-center justify-between bg-white p-3 rounded shadow-sm"
-            >
-              <div>
-                <p className="font-medium">{p.title}</p>
-                <p className="text-gray-500 text-sm">
-                  Stock: {p.stock} / Threshold: {p.minimumStockThreshold} —
-                  Priority:{" "}
+          {lowStockProducts.map((p) => {
+            const priority = getPriority(p);
+            return (
+              <div
+                key={p._id.toString()}
+                className="flex items-center justify-between bg-white border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
+              >
+                {/* Product Info */}
+                <div>
+                  <p className="font-semibold text-gray-900">{p.title}</p>
+                  <p className="text-sm text-gray-600">
+                    Stock: <span className="font-medium">{p.stock}</span> /{" "}
+                    {p.minimumStockThreshold}
+                  </p>
                   <span
-                    className={`font-bold ${
-                      getPriority(p) === "High"
-                        ? "text-red-600"
-                        : getPriority(p) === "Medium"
-                          ? "text-yellow-600"
-                          : "text-green-600"
+                    className={`inline-block mt-1 px-2 py-0.5 rounded text-xs font-semibold ${
+                      priority === "High"
+                        ? "bg-red-100 text-red-700"
+                        : priority === "Medium"
+                          ? "bg-yellow-100 text-yellow-700"
+                          : "bg-green-100 text-green-700"
                     }`}
                   >
-                    {getPriority(p)}
+                    Priority: {priority}
                   </span>
-                </p>
+                </div>
+
+                {/* Actions */}
+                <div className="flex gap-2">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() =>
+                      handleRestock(
+                        p._id.toString(),
+                        p.minimumStockThreshold * 2,
+                      )
+                    }
+                  >
+                    Restock
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    onClick={() => handleRemove(p._id.toString())}
+                  >
+                    Remove
+                  </Button>
+                </div>
               </div>
-              <div className="flex gap-2">
-                <Button
-                  size="sm"
-                  onClick={() =>
-                    handleRestock(p._id.toString(), p.minimumStockThreshold * 2)
-                  }
-                >
-                  Restock
-                </Button>
-                <Button
-                  size="sm"
-                  variant="destructive"
-                  onClick={() => handleRemove(p._id.toString())}
-                >
-                  Remove
-                </Button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>

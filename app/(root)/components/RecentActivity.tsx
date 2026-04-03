@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { IActivity } from "@/lib/database/models/activity.model";
 import { getRecentActivities } from "@/lib/actions/activity.actions";
+import { Card } from "@/components/ui/card";
+import { Clock } from "lucide-react";
 
 type ActivityProps = { tenantId: string };
 
@@ -18,23 +20,29 @@ const RecentActivity = ({ tenantId }: ActivityProps) => {
   }, [tenantId]);
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md w-full md:w-1/2">
-      <h3 className="text-lg font-semibold mb-2">Recent Activity</h3>
-      <ul className="divide-y divide-gray-200">
-        {activities.map((a, idx) => (
-          <li key={idx} className="py-2 text-sm">
-            <span className="text-gray-400 mr-2">
-              {new Date(a.timestamp).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </span>
-            — {a.message}
-          </li>
-        ))}
-        {activities.length === 0 && <li>No recent activity</li>}
-      </ul>
-    </div>
+    <Card className="p-5 shadow-sm rounded-lg">
+      {activities.length === 0 ? (
+        <p className="text-gray-500 italic">No recent activity</p>
+      ) : (
+        <ul className="divide-y divide-gray-200">
+          {activities.map((a, idx) => (
+            <li
+              key={idx}
+              className="py-3 flex items-center gap-3 hover:bg-gray-50 transition rounded-md px-2"
+            >
+              <Clock className="w-4 h-4 text-gray-400" />
+              <span className="text-gray-500 text-xs">
+                {new Date(a.timestamp).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </span>
+              <span className="text-gray-700 text-sm">— {a.message}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </Card>
   );
 };
 

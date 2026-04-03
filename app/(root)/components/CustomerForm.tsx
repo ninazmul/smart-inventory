@@ -11,6 +11,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input"; // ✅ Import Shadcn Input
 import * as z from "zod";
 import { createCustomer, updateCustomer } from "@/lib/actions/customer.actions";
 import { ICustomer } from "@/lib/database/models/customer.model";
@@ -87,11 +88,7 @@ const CustomerForm = ({ type, tenantId, customer }: CustomerFormProps) => {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <input
-                  placeholder="Enter full name"
-                  {...field}
-                  className="input-field"
-                />
+                <Input placeholder="Enter full name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -106,11 +103,7 @@ const CustomerForm = ({ type, tenantId, customer }: CustomerFormProps) => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <input
-                  placeholder="Enter email (optional)"
-                  {...field}
-                  className="input-field"
-                />
+                <Input placeholder="Enter email (optional)" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -125,11 +118,7 @@ const CustomerForm = ({ type, tenantId, customer }: CustomerFormProps) => {
             <FormItem>
               <FormLabel>Phone</FormLabel>
               <FormControl>
-                <input
-                  placeholder="Enter phone number"
-                  {...field}
-                  className="input-field"
-                />
+                <Input placeholder="Enter phone number" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -144,11 +133,7 @@ const CustomerForm = ({ type, tenantId, customer }: CustomerFormProps) => {
             <FormItem>
               <FormLabel>Address</FormLabel>
               <FormControl>
-                <input
-                  placeholder="Enter address (optional)"
-                  {...field}
-                  className="input-field"
-                />
+                <Input placeholder="Enter address (optional)" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -163,11 +148,7 @@ const CustomerForm = ({ type, tenantId, customer }: CustomerFormProps) => {
             <FormItem>
               <FormLabel>City</FormLabel>
               <FormControl>
-                <input
-                  placeholder="Enter city (optional)"
-                  {...field}
-                  className="input-field"
-                />
+                <Input placeholder="Enter city (optional)" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

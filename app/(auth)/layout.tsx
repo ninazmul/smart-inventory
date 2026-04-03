@@ -10,29 +10,27 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <div className="absolute inset-0 bg-gradient-to-br from-white/35 via-transparent to-indigo-100/20 dark:from-white/5 dark:to-indigo-500/10" />
         </div>
 
-        <aside className="relative hidden lg:flex lg:w-1/2 flex-col justify-between border-r border-gray-200/80 dark:border-white/10 p-10">
+        <aside className="relative hidden lg:flex lg:w-1/2 flex-col items-center justify-center border-r border-gray-200/80 dark:border-white/10 p-10 text-center">
           <div className="pointer-events-none absolute inset-0">
             <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-indigo-500/20 blur-3xl" />
             <div className="absolute -bottom-20 -left-10 h-64 w-64 rounded-full bg-sky-400/20 blur-3xl" />
           </div>
 
-          <div className="relative">
+          <div className="relative flex flex-col items-center space-y-6">
             <Image
               src="/assets/images/logo.png"
-              alt="Smart Inventory Admin Portal"
+              alt="Smart Inventory Software"
               width={500}
               height={300}
               className="h-auto w-auto"
               priority
             />
-          </div>
 
-          <div className="relative space-y-4">
             <p className="inline-flex items-center rounded-full border border-gray-200 dark:border-gray-700 bg-white/70 dark:bg-gray-800/60 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-300">
               Welcome Back
             </p>
             <h1 className="text-3xl font-bold leading-tight text-gray-900 dark:text-white">
-              Smart Inventory Admin Portal
+              Smart Inventory Software
             </h1>
             <p className="max-w-md text-sm text-gray-600 dark:text-gray-300">
               Securely sign in to manage inventory, orders, and customer
@@ -46,10 +44,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             <div className="mb-4 flex justify-center">
               <Image
                 src="/assets/images/logo.png"
-                alt="Smart Inventory Admin Portal"
+                alt="Smart Inventory Software"
                 width={500}
-                height={200}
-                className="h-[200px] w-auto"
+                height={300}
+                className="h-[60px] w-auto"
                 priority
               />
             </div>
@@ -65,7 +63,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 Welcome Back
               </p>
               <h1 className="mt-3 text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
-                Smart Inventory Admin Portal
+                Smart Inventory Software
               </h1>
               <p className="mt-1.5 text-sm text-gray-600 dark:text-gray-300">
                 Securely sign in to manage inventory, orders, and customer

@@ -167,7 +167,7 @@ const OrderTable = ({
                       <Pencil size={16} />
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="bg-white max-w-2xl">
+                  <DialogContent className="bg-white max-w-3xl max-h-[80vh] overflow-y-auto">
                     <DialogHeader>
                       <DialogTitle>Update Order</DialogTitle>
                       <DialogDescription>
